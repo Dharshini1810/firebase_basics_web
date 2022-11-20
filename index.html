@@ -1,0 +1,72 @@
+<html>
+    <head>
+        <title>FIREBASE AUTH</title>
+    </head> 
+    <body>
+        <script src="https://www.gstatic.com/firebasejs/9.6.11/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/9.6.11/firebase-auth.js"></script>
+        <form>
+        <div style="text-align: center; padding-top: 40px;">
+        <input type="email" id="email" placeholder="EMAIL">
+        </div>
+        <div style="text-align: center; padding-top: 40px;">
+        <input type="text" id="password" placeholder="PASSWORD">
+        </div>
+        <div style="text-align: center; padding-top: 40px;">
+        <input type="button" value="SIGNUP" id="signup">
+        <div style="text-align: center; padding-top: 40px;">
+        <input type="button" value="SIGNIN" id="signin">    
+        <div style="text-align: center; padding-top: 40px;">
+        <input type="button" value="SIGNOUT" id="signout">    
+        <div style="text-align: center; padding-top: 40px;">    
+        </form>   
+        <script type="module">
+            import {initializeApp} from "https://www.gstatic.com/firebasejs/9.6.11/firebase-app.js";
+            import {createUserWithEmailAndPassword,getAuth,signInWithEmailAndPassword,signOut} from "https://www.gstatic.com/firebasejs/9.6.11/firebase-auth.js";
+            const firebaseConfig = {
+                apiKey: "AIzaSyCm3ZPu14NTXr3VUxShPRJUnThaBFMPJQw",
+                authDomain: "fir-auth-d0968.firebaseapp.com",
+                projectId: "fir-auth-d0968",
+                storageBucket: "fir-auth-d0968.appspot.com",
+                messagingSenderId: "880384576056",
+                appId: "1:880384576056:web:9e2ed7c2e36f4dde3274cd"
+            };
+            // Initialize Firebase
+            const app = initializeApp(firebaseConfig);
+            const Auth= getAuth(app); 
+            document.getElementById('signup').addEventListener('click',function() {
+                const email=document.getElementById("email").value
+                const pswd=document.getElementById("password").value  
+                createUserWithEmailAndPassword(Auth,email,pswd).then((userCredential) => {
+                const user = userCredential.user;
+                alert("Account Created Successfully!!!")
+                })
+                .catch((error) => {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    alert("Signup failed!!"+errorMessage);
+                }) 
+            }) 
+            document.getElementById('signin').addEventListener('click',function(){
+                const email=document.getElementById('email').value 
+                const pswd=document.getElementById('password').value 
+                signInWithEmailAndPassword(Auth,email,pswd).then((userCredential)=>{
+                    alert('Signed in successfully');
+                })
+                .catch((error) => {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    alert("Signup failed!!"+errorMessage);
+                }) 
+            }) 
+            document.getElementById('signout').addEventListener('click',function() {
+                signOut(Auth).then(()=>{
+                    alert('Signed Out successfully!!')
+                })
+                .catch((error)=>{
+                    alert(error.message)
+                })
+            })
+        </script>
+    </body>
+</html>
